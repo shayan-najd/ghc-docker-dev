@@ -13,6 +13,7 @@ To use (in Linux),
      ```shell
      ./Connect.sh
      ```
+
 You are now ready to compile GHC!
 You can edit Haskell files using Emacs GUI running inside the Docker image.
 There is one final setup step to run once you have the image up:
