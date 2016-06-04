@@ -49,6 +49,9 @@ RUN apt-get update && apt-get install -y \
   xsltproc docbook-xsl \
   python-sphinx \
 
+  # for developing from the image
+  emacs
+  
   # arc tool
   # It makes a lot more sense to run this from your host
   git php5-cli php5-curl libssl-dev vim-tiny \
@@ -67,8 +70,16 @@ ENV LANG     C.UTF-8
 ENV LC_ALL   C.UTF-8
 ENV LANGUAGE C.UTF-8
 
-RUN useradd -m -d /home/ghc -s /bin/bash ghc
-RUN echo "ghc ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/ghc && chmod 0440 /etc/sudoers.d/ghc
+# To be able to run Emacs GUI (and other apps in GUI)
+# Set your own uid and gid
+# (from Fábio Rehm's blog post)
+RUN export uid=1000 gid=1000 && \
+    mkdir -p /home/ghc && \
+    echo "ghc:x:${uid}:${gid}:GHC,,,:/home/ghc:/bin/bash" >> /etc/passwd && \
+    echo "ghc:x:${uid}:" >> /etc/group && \
+    echo "ghc ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/ghc && \
+    chmod 0440 /etc/sudoers.d/ghc && \
+    chown ${uid}:${gid} -R /home/ghc
 ENV HOME /home/ghc
 WORKDIR /home/ghc
 USER ghc
