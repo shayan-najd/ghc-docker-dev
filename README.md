@@ -1,11 +1,20 @@
 # A docker container for hacking on GHC
 
-This is on the docker registry as `ghc-haskell-dev`.
-To use, mount your GHC source code into /home/ghc
+To use (in Linux),
 
-    sudo docker run --rm -i -t -v `pwd`:/home/ghc gregweber/ghc-haskell-dev /bin/bash
+0. Set `uid` and `gid` in [the Docker file](https://github.com/shayan-najd/ghc-docker-dev/blob/master/Dockerfile#L76)
 
+1. Build the image:
+     ```shell
+     sudo docker build -t ghc-dev .
+     ```
+
+2. Load the image:
+     ```shell
+     ./Connect.sh
+     ```
 You are now ready to compile GHC!
+You can edit Haskell files using Emacs GUI running inside the Docker image.
 There is one final setup step to run once you have the image up:
 
     arc install-certificate
