@@ -50,7 +50,7 @@ RUN apt-get update && apt-get install -y \
   python-sphinx \
 
   # for developing from the image
-  emacs
+  emacs \
   
   # arc tool
   # It makes a lot more sense to run this from your host
